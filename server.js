@@ -1,6 +1,6 @@
 //------------------------ Import ------------------------
 const app = require('./app');
-const db = require('./models/index.js');
+const db = require('./models/index.js'); //test
 
 //------------------------ init port ------------------------
 const port = 8000;
