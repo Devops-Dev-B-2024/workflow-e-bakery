@@ -39,3 +39,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          
+      - name: build Docker image
+        run: docker build -t e-bakery:latest .
