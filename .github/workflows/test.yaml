@@ -1,7 +1,7 @@
 name: Workflow for e-bakery
 on: 
   push:
-    branches: [master]
+    branches: [yann]
   pull_request:
     branches: [master]
 
