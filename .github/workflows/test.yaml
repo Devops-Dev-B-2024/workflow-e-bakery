@@ -2,7 +2,7 @@ name: Workflow for e-bakery
 run-name: tests running by @${{ github.actor }}
 on: 
   push:
-    branches: [yann]
+    branches: [master]
   pull_request:
     branches: [master]
 
@@ -10,10 +10,13 @@ jobs:
   run-node: 
     runs-on: ubuntu-latest
     steps: 
-      - uses: actions/checkout@v4
+      - name: checkout code
+        uses: actions/checkout@v4
+
       - name: use Node.JS
         uses: actions/setup-node@v4
         with: 
           node-version: 20.x
+          
       - name: dependances installations
         run: npm install
