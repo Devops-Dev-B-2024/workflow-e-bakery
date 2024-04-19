@@ -2,7 +2,7 @@ name: Workflow for e-bakery
 run-name: tests running by @${{ github.actor }}
 on: 
   push:
-    branches: [master]
+    branches: [nicolas]
   pull_request:
     branches: [master]
 
@@ -26,4 +26,7 @@ jobs:
 
       - name: lint code
         run: npx eslint .
+
+      - name: Dependency Scanning
+        run: npm audit
       
