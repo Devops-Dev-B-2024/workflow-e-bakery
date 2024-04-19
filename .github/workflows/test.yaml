@@ -26,4 +26,7 @@ jobs:
 
       - name: lint code
         run: npx eslint .
+
+      - name: Dependency Scanning
+        run: npm audit
       
