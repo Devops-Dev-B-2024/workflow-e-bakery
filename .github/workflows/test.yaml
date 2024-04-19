@@ -2,7 +2,7 @@ name: Workflow for e-bakery
 run-name: tests running by @${{ github.actor }}
 on: 
   push:
-    branches: [master]
+    branches: [nicolas]
   pull_request:
     branches: [master]
 
@@ -20,3 +20,6 @@ jobs:
           
       - name: dependances installations
         run: npm install
+
+      - name: run tests
+        run: npm test
