@@ -33,14 +33,7 @@ const mockRes = {
 ///////////////// GLOBAL CONTROLLER ////////////////
 ///////////////// LOGIN ////////////////
 describe('Login', () => {
-  it('should login successfully and return a token', async () => {
-    const mockReq = {
-      body: {
-        mail: 'test@example.com',
-        password: 'password123',
-        role: 'customer',
-      },
-    };
+  it('should 
 
     const mockCustomer = {
       id: 1,
