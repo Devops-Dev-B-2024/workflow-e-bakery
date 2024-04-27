@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: build docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/e-bakery:latest .
+        run: docker build -t e-bakery:latest .
 
       - name: tag docker image
         run: docker tag e-bakery ${{ secrets.DOCKER_USERNAME }}/e-bakery:latest 
