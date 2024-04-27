@@ -44,7 +44,7 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/e-bakery:latest .
 
       - name: tag docker image
-        run: docker tag ${{ secrets.DOCKER_USERNAME }}/e-bakery:latest 
+        run: docker tag e-bakery ${{ secrets.DOCKER_USERNAME }}/e-bakery:latest 
 
       - name: push docker image to docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/e-bakery:latest 
