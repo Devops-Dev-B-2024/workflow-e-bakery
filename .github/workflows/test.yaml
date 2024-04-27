@@ -44,4 +44,4 @@ jobs:
         run: docker build -t username/e-bakery:latest .
 
       - name: push docker image to docker Hub
-        run: docker push username/e-bakery:latest 
+        run: docker push username/e-bakery:latest
