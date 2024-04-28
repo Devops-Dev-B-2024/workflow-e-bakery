@@ -26,7 +26,7 @@ jobs:
 
       - name: lint code
         run: npx eslint .
-
+        
   docker: 
     needs: run-node
     runs-on: ubuntu-latest
@@ -48,3 +48,7 @@ jobs:
 
       - name: push docker image to docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/e-bakery:latest 
+
+      - name: Dependency Scanning
+        run: npm audit
+    
