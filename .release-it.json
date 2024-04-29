@@ -1,0 +1,14 @@
+{
+    "increment": "patch",
+    "git": {
+      "tagName": "v${version}",
+      "commitMessage": "Release v${version}",
+      "requireCleanWorkingDir": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "infile": "CHANGELOG.md"
+      }
+    }
+}
+  
