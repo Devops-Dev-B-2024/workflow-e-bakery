@@ -2,7 +2,7 @@ name: Workflow for e-bakery
 run-name: tests running by @${{ github.actor }}
 on: 
   push:
-    branches: [test-branchnicolas]
+    branches: [test-branch]
 
 
 jobs: 
