@@ -2,6 +2,11 @@ name: Auto-close stale pull requests
 on:
   schedule:
     - cron: '*/2 * * * *'
+    push:
+    branches: [nicolas]
+  pull_request:
+    branches: [master]
+    
 jobs:
   close-stale-pr:
     runs-on: ubuntu-latest
