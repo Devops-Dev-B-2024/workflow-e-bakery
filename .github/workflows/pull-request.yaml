@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: '*/3 * * * *'
   pull_request:
-    branches: [nicolas]
+    branches: [nicolas-test]
     
 jobs:
   close-stale-pr:
