@@ -4,7 +4,9 @@ on:
     - cron: '*/10 * * * *'
   pull_request:
     branches: [test-branch]
-    
+  push:
+    branches: [test-branch]
+
 jobs:
   close-stale-pr:
     runs-on: ubuntu-latest
