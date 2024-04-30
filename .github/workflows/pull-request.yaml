@@ -1,9 +1,9 @@
 name: Auto-close stale pull requests
 on:
   schedule:
-    - cron: '*/2 * * * *'
+    - cron: '*/10 * * * *'
   pull_request:
-    branches: [nicolas]
+    branches: [test-branch]
     
 jobs:
   close-stale-pr:
@@ -32,7 +32,7 @@ jobs:
           repo_name = os.getenv('GITHUB_REPOSITORY').split('/')[1]
 
           # Define the time threshold for stale pull requests (in minutes)
-          stale_threshold_minutes = 2
+          stale_threshold_minutes = 10
 
           # Authenticate using the provided GitHub token
           github_token = os.getenv('GITHUB_TOKEN')
