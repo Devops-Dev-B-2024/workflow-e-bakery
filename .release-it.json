@@ -5,6 +5,9 @@
       "commitMessage": "Release v${version}",
       "requireCleanWorkingDir": true
     },
+    "npm": {
+      "publish": false
+    },
     "plugins": {
       "@release-it/conventional-changelog": {
         "infile": "CHANGELOG.md"
