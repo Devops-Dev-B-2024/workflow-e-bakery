@@ -1,0 +1,56 @@
+name: Auto-close stale pull requests
+on:
+  schedule:
+    - cron: '*/2 * * * *'
+jobs:
+  close-stale-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install PyGithub
+
+      - name: Close stale pull requests
+        run: |
+          python - <<EOF
+          import os
+          from datetime import datetime, timedelta
+          from github import Github
+
+          # GitHub repository details
+          repo_owner = os.getenv('GITHUB_REPOSITORY').split('/')[0]
+          repo_name = os.getenv('GITHUB_REPOSITORY').split('/')[1]
+
+          # Define the time threshold for stale pull requests (in minutes)
+          stale_threshold_minutes = 2
+
+          # Authenticate using the provided GitHub token
+          github_token = os.getenv('GITHUB_TOKEN')
+          g = Github(github_token)
+
+          repo = g.get_repo(f'{repo_owner}/{repo_name}')
+
+          # Get all open pull requests
+          pull_requests = repo.get_pulls(state='open')
+
+          # Current datetime
+          now = datetime.utcnow()
+
+          for pr in pull_requests:
+              last_updated = pr.updated_at
+              time_since_update = now - last_updated
+
+              # If the PR is stale, close it
+              if time_since_update.total_seconds() / 60 >= stale_threshold_minutes:
+                  pr.edit(state='closed')
+                  print(f'Closed stale pull request: {pr.title}')
+          EOF
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
