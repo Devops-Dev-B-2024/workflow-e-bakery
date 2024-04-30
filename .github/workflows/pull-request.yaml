@@ -26,7 +26,7 @@ jobs:
         run: |
           python - <<EOF
           import os
-          from datetime import datetime, timedelta
+          from datetime import datetime, timedelta, timezone
           from github import Github
 
           # GitHub repository details
@@ -45,11 +45,11 @@ jobs:
           # Get all open pull requests
           pull_requests = repo.get_pulls(state='open')
 
-          # Current datetime
-          now = datetime.utcnow()
+          # Current datetime in UTC timezone
+          now = datetime.now(timezone.utc)
 
           for pr in pull_requests:
-              last_updated = pr.updated_at
+              last_updated = pr.updated_at.replace(tzinfo=timezone.utc)
               time_since_update = now - last_updated
 
               # If the PR is stale, close it
