@@ -3,8 +3,7 @@ run-name: tests running by @${{ github.actor }}
 on: 
   push:
     branches: [nicolas]
-  pull_request:
-    branches: [master]
+
 
 jobs: 
   run-node: 
