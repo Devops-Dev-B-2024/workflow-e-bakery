@@ -1,5 +1,9 @@
 
 
+## <small>1.0.5 (2024-05-01)</small>
+
+* ✅ add creating github release automatically ([60b70d9](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/60b70d9))
+
 ## <small>1.0.4 (2024-05-01)</small>
 
 * Merge branch 'yann' of https://github.com/Devops-Dev-B-2024/workflow-e-bakery into yann ([16df430](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/16df430))
