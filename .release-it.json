@@ -5,6 +5,9 @@
       "commitMessage": "Release v${version}",
       "requireCleanWorkingDir": true
     },
+    "github": {
+      "publish": true
+    },
     "npm": {
       "publish": false
     },
