@@ -3,6 +3,8 @@ run-name: testing and deploying by @${{ github.actor }}
 on: 
   push:
     branches: [yann]
+    tags:
+      - 'v*'
 permissions:
   contents: write
 
