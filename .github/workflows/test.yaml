@@ -1,8 +1,12 @@
 name: Test workflow
 run-name: tests running by @${{ github.actor }}
 on: 
+  push:
+    branches: [before-master]
   pull_request:
-    branches: [master]
+    branches: 
+      - master
+      - before-master
 
 jobs: 
   run-node: 
