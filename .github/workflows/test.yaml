@@ -1,5 +1,5 @@
 name: Workflow for e-bakery
- on: 
+on: 
   push:
     branches: [test-branch]
 
@@ -22,7 +22,7 @@ jobs:
         run: npm test
 
       - name: lint code
-        run: npx eslint
+        run: npx eslint .
         
   docker: 
     needs: run-node
