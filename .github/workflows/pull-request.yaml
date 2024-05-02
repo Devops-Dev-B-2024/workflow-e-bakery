@@ -1,63 +1,24 @@
-name: Auto-close stale pull requests
+name: Close Pull Request
+
 on:
-  schedule:
-    - cron: '*/1 * * * *'
-  pull_request:
-    branches: [test-branch]
-  push:
-    branches: [test-branch]
+  pull_request_target:
+    types: [opened]
 
 jobs:
-  close-stale-pr:
+  run:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
-        run: pip install PyGithub
-
-      - name: Close stale pull requests
+      - name: Check if pull request is from specific branch
+        if: ${{ github.event.pull_request.head.ref == 'test-branch' }}
         run: |
-          python - <<EOF
-          import os
-          from datetime import datetime, timedelta, timezone
-          from github import Github
-
-          # GitHub repository details
-          repo_owner = os.getenv('GITHUB_REPOSITORY').split('/')[0]
-          repo_name = os.getenv('GITHUB_REPOSITORY').split('/')[1]
-
-          # Define the time threshold for stale pull requests (in minutes)
-          stale_threshold_minutes = 1
-
-          # Authenticate using the provided GitHub token
-          github_token = os.getenv('GITHUB_TOKEN')
-          g = Github(github_token)
-
-          repo = g.get_repo(f'{repo_owner}/{repo_name}')
-
-          # Get all open pull requests
-          pull_requests = repo.get_pulls(state='open')
-
-          # Current datetime in UTC timezone
-          now = datetime.now(timezone.utc)
-
-          for pr in pull_requests:
-              last_updated = pr.updated_at.replace(tzinfo=timezone.utc)
-              time_since_update = now - last_updated
-
-              # If the PR is stale, close it
-              if time_since_update.total_seconds() / 60 >= stale_threshold_minutes:
-                  pr.edit(state='closed')
-                  print(f'Closed stale pull request: {pr.title}')
-          EOF
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "Pull request is from 'test-branch'"
+          # Add steps to wait and close the pull request here
+          # Wait for 2 minutes
+          sleep 120
+          # Close Pull Request
+          echo "Closing the pull request"
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/merge" \
+            -d '{"commit_title":"Pull request closed","merge_method":"close"}'
