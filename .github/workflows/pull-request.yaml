@@ -1,13 +1,24 @@
 name: Close Pull Request
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened]
 
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-    - uses: superbrothers/close-pull-request@v3
-      with:
-        comment: "Pull Request as closed."
+      - name: Check if reviews are approved
+        if: github.event.pull_request.review_decision == 'approved'
+        run: |
+          echo "Reviews are approved. Closing the pull request..."
+          # Add the 'close-pull-request' action here
+      - name: Check if reviews are requested
+        if: github.event.pull_request.review_decision == 'changes_requested'
+        run: |
+          echo "Changes are requested. Do not close the pull request."
+      - name: Check if no reviews are required
+        if: github.event.pull_request.review_decision == null
+        run: |
+          echo "No reviews required. Closing the pull request..."
+          # Add the 'close-pull-request' action here
