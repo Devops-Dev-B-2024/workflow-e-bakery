@@ -6,7 +6,7 @@ const OpenApiValidator = require('express-openapi-validator');
 //Init app
 const app = express();
 app.use(express.json());
-//Comment add
+
 //To use yaml
 app.use(
     OpenApiValidator.middleware({

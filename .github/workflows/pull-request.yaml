@@ -8,6 +8,10 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-    - uses: superbrothers/close-pull-request@v3
-      with:
-        comment: "Pull Request as closed."
+      - name: Wait for 2 minutes
+        run: sleep 120 # Sleep for 2 minutes (120 seconds)
+      - name: Close Pull Request
+        if: github.event.pull_request.review_decision == null
+        uses: superbrothers/close-pull-request@v3
+        with:
+          comment: "This pull request has been closed because no review was submitted within 2 minutes."
