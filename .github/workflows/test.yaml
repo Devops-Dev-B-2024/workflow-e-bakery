@@ -23,6 +23,9 @@ jobs:
 
       - name: lint code
         run: npx eslint .
+      
+      - name: dependency scanning
+        run: npm audit
         
   docker: 
     needs: run-node
@@ -32,20 +35,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: log in to docker Hub
+        id: login
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: build docker image
+        if: steps.login.outcome == 'success'
         run: docker build -t e-bakery:latest .
 
       - name: tag docker image
+        if: steps.login.outcome == 'success'
         run: docker tag e-bakery ${{ secrets.DOCKER_USERNAME }}/e-bakery:latest 
 
       - name: push docker image to docker Hub
+        if: steps.login.outcome == 'success'
         run: docker push ${{ secrets.DOCKER_USERNAME }}/e-bakery:latest 
-
-      - name: Dependency Scanning
-        run: npm audit
     
