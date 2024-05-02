@@ -12,8 +12,8 @@ jobs:
         run: |
           echo "Pull request is from 'test-branch'"
           # Add steps to wait and close the pull request here
-          # Wait for 2 minutes
-          sleep 120
+          # Wait for 3 minutes
+          sleep 180
           # Close Pull Request
           echo "Closing the pull request"
           curl -X POST \
