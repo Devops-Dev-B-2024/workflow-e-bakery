@@ -12,6 +12,6 @@ jobs:
         run: sleep 120 # Sleep for 2 minutes (120 seconds)
       - name: Close Pull Request
         if: github.event_name == 'pull_request'
-        uses: superbrothers/close-pull-request@v3
+        uses: NicolasKeerpal/workflow-e-bakery/close-pull-request@v1
         with:
           comment: "This pull request has been closed because no reviews were submitted."
