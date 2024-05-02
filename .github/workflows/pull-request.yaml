@@ -1,4 +1,4 @@
-name: Close Pull Request
+name: Close Pull Request in 2 min
 
 on:
   pull_request:
