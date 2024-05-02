@@ -1,7 +1,7 @@
 name: Close Pull Request
 on:
-  pull_request_target:
-    types: [opened]
+  pull_request:
+    types: [opened, review_requested]
 
 jobs:
   run:
@@ -11,13 +11,20 @@ jobs:
         if: ${{ github.event.pull_request.head.ref == 'test-branch' }}
         run: |
           echo "Pull request is from 'test-branch'"
-          # Add steps to wait and close the pull request here
           # Wait for 3 minutes
           sleep 180
-          # Close Pull Request
-          echo "Closing the pull request"
-          curl -X POST \
+          # Check if any reviews have been submitted
+          reviews=$(curl -s -X GET \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/merge" \
-            -d '{"commit_title":"Pull request closed","merge_method":"close"}'
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews")
+          if [[ $(echo "$reviews" | jq '. | length') == 0 ]]; then
+            echo "No reviews submitted. Closing the pull request..."
+            # Close Pull Request
+            curl -X POST \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/merge" \
+              -d '{"commit_title":"Pull request closed","merge_method":"close"}'
+          else
+            echo "Reviews have been submitted. Skipping..."
+          fi
