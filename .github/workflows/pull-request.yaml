@@ -1,4 +1,4 @@
-name: Close Pull Request
+name: Close Pull Request in 2 min
 
 on:
   pull_request:
@@ -12,10 +12,6 @@ jobs:
         run: sleep 120 # Sleep for 2 minutes (120 seconds)
       - name: Close Pull Request
         if: github.event.pull_request.review_decision == null
-        run: |
-          echo "Closing pull request #${{ github.event.pull_request.number }}"
-          TOKEN="${{ secrets.GITHUB_TOKEN }}"
-          OWNER="${{ github.repository_owner }}"
-          REPO="${{ github.repository }}"
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          curl -X PUT -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${OWNER}/${REPO}/pulls/${PR_NUMBER}" -d '{"state": "closed"}'
+        uses: superbrothers/close-pull-request@v3
+        with:
+          comment: "This pull request has been closed because no review was submitted within 2 minutes."
