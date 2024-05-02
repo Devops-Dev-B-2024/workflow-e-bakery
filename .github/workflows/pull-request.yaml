@@ -13,6 +13,11 @@ jobs:
         run: |
           echo "Reviews are approved. Closing the pull request..."
           # Add the 'close-pull-request' action here
+          TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          curl -X POST -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${OWNER}/${REPO}/pulls/${PR_NUMBER}/merge" -d '{"merge_method": "squash", "commit_title": "Automatically closing pull request", "commit_message": "This pull request has been closed because it was approved."}'
       - name: Check if reviews are requested
         if: github.event.pull_request.review_decision == 'changes_requested'
         run: |
@@ -22,3 +27,8 @@ jobs:
         run: |
           echo "No reviews required. Closing the pull request..."
           # Add the 'close-pull-request' action here
+          TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          curl -X POST -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${OWNER}/${REPO}/pulls/${PR_NUMBER}/merge" -d '{"merge_method": "squash", "commit_title": "Automatically closing pull request", "commit_message": "This pull request has been closed because no reviews were required."}'
