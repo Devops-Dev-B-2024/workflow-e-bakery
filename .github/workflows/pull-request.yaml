@@ -10,7 +10,10 @@ jobs:
     steps:
       - name: Close Pull Request
         if: github.event.pull_request.review_decision == null
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         uses: peter-evans/close-pull@v3
         with:
           pull-request-number: ${{ github.event.pull_request.number }}
+          token: ${{ env.PAT_TOKEN }}
           delete-branch: true
