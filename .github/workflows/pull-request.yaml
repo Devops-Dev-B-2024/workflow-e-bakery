@@ -14,4 +14,4 @@ jobs:
         if: github.event.pull_request.review_decision == null
         run: |
           echo "Closing pull request #${{ github.event.pull_request.number }}"
-          gh pr close --number ${{ github.event.pull_request.number }} --delete-branch
+          gh pr close ${{ github.event.pull_request.number }} --delete-branch
