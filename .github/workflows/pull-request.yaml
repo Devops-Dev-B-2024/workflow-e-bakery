@@ -6,13 +6,15 @@ on:
 
 permissions:
   contents: write
-  
+
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for 2 minutes
         run: sleep 120 # Sleep for 2 minutes (120 seconds)
+      - name: Debug URL
+        run: echo "URL: https://api.github.com/repos/${{ github.event.repository.owner.login }}/${{ github.event.repository.name }}/pulls/${{ github.event.pull_request.number }}"
       - name: Close Pull Request
         if: github.event.pull_request.review_decision == null
         run: |
@@ -21,4 +23,4 @@ jobs:
           OWNER="${{ github.event.repository.owner.login }}"
           REPO="${{ github.event.repository.name }}"
           PR_NUMBER="${{ github.event.pull_request.number }}"
-          curl -X PUT -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${OWNER}/${REPO}/pulls/${PR_NUMBER}" -d '{"state": "closed"}'
+          curl -X PATCH -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${OWNER}/${REPO}/pulls/${PR_NUMBER}" -d '{"state": "closed"}'
