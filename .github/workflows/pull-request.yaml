@@ -1,5 +1,5 @@
 name: Close Pull Request
-run-name: Close Pull Request by @${{ github.actor }}
+run-name: Close Pull Request running by @${{ github.actor }}
 
 on:
   pull_request:
@@ -11,15 +11,11 @@ jobs:
     steps:
       - name: Wait for 1 minute
         run: sleep 60 # Sleep for 1 minute (60 seconds)
-      - name: Check Reviews
-        id: check_reviews
-        run: echo ::set-output name=has_reviews::$(if [ $(curl -s -H "Authorization: token ${{ secrets.PR_Key }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews" | jq '. | length') -eq 0 ]; then echo "false"; else echo "true"; fi)
+      - name: Check Review Status
+        id: check_review
+        run: echo "::set-output name=has_review::$([[ $(gh pr view ${{ github.event.pull_request.number }} --json review_decision -q . == 'null' ]] && echo 'false' || echo 'true')]"
       - name: Close Pull Request
-        if: steps.check_reviews.outputs.has_reviews == 'false'
-        run: |
-          echo "Closing pull request #${{ github.event.pull_request.number }}"
-          TOKEN="${{ secrets.PR_Key }}"
-          OWNER="${{ github.repository_owner }}"
-          REPO="${{ github.event.repository.name }}"
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          curl -X PATCH -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${OWNER}/${REPO}/pulls/${PR_NUMBER}" -d '{"state": "closed"}'
+        if: steps.check_review.outputs.has_review == 'false'
+        uses: superbrothers/close-pull-request@v3
+        with:
+          comment: "This pull request has been closed because no review was submitted within 1 minutes."
