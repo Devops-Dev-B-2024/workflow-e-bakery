@@ -8,17 +8,23 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
     steps:
       - name: Wait for 1 minute
         run: sleep 60 # Sleep for 1 minute (60 seconds)
       - name: Check Review Status
         id: check_review
         run: |
-          echo "::set-output name=has_review::$([[ $(gh pr view ${{ github.event.pull_request.number }} --json review_decision -q .) == 'null' ]] && echo 'false' || echo 'true')"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HAS_REVIEW=$(gh pr view $PR_NUMBER --json review_decision -q .)
+          if [[ "$HAS_REVIEW" == "null" ]]; then
+            echo "has_review=false" >> $GITHUB_ENV
+          else
+            echo "has_review=true" >> $GITHUB_ENV
+          fi
       - name: Close Pull Request
-        if: steps.check_review.outputs.has_review == 'false'
+        if: env.has_review == 'false'
         uses: superbrothers/close-pull-request@v3
         with:
           comment: "This pull request has been closed because no review was submitted within 1 minute."
