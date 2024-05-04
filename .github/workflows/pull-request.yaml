@@ -1,17 +1,12 @@
 name: Close Pull Request
-run-name: Close Pull Request running by @${{ github.actor }}
 
 on:
   pull_request:
     types: [opened]
 
 jobs:
-  run:
+  close_pull_request:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      PR_NUMBER: ${{ github.event.pull_request.number }}
-      HAS_REVIEW: false
     steps:
       - name: Wait for 1 minute
         run: sleep 60 # Sleep for 1 minute (60 seconds)
@@ -19,6 +14,11 @@ jobs:
         id: check_review
         run: |
           HAS_REVIEW=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}/reviews" | jq '. | length')
+          if [[ "$HAS_REVIEW" == "0" ]]; then
+            echo "HAS_REVIEW=false" >> $GITHUB_ENV
+          else
+            echo "HAS_REVIEW=true" >> $GITHUB_ENV
+          fi
       - name: Close Pull Request
         if: env.HAS_REVIEW == 'false'
         uses: superbrothers/close-pull-request@v3
