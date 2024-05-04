@@ -11,12 +11,15 @@ jobs:
     steps:
       - name: Wait for 1 minute
         run: sleep 60 # Sleep for 1 minute (60 seconds)
+      - name: Check Reviews
+        id: check_reviews
+        run: echo ::set-output name=has_approved::$(curl -s -H "Authorization: Bearer ${{ secrets.PR_Key }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews" | jq '.[] | select(.state == "APPROVED") | length > 0')
       - name: Close Pull Request
-        if: github.event.pull_request.reviews == null || !github.event.pull_request.reviews.some(r => r.state == 'APPROVED')
+        if: steps.check_reviews.outputs.has_approved == 'false'
         run: |
           echo "Closing pull request #${{ github.event.pull_request.number }}"
           TOKEN="${{ secrets.PR_Key }}"
-          OWNER="${{ github.event.repository.owner.login }}"
+          OWNER="${{ github.repository_owner }}"
           REPO="${{ github.event.repository.name }}"
           PR_NUMBER="${{ github.event.pull_request.number }}"
           curl -X PATCH -H "Authorization: token $TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${OWNER}/${REPO}/pulls/${PR_NUMBER}" -d '{"state": "closed"}'
