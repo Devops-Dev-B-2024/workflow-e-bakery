@@ -2,9 +2,7 @@ name: CI/CD workflow
 run-name: testing and deploying by @${{ github.actor }}
 on: 
   push:
-    branches: [yann]
-    tags:
-      - 'v*'
+    branches: [master]
 permissions:
   contents: write
 
