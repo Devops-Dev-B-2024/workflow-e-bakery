@@ -1,5 +1,9 @@
 
 
+## <small>1.0.8 (2024-05-04)</small>
+
+* Merge branch 'yann' of https://github.com/Devops-Dev-B-2024/workflow-e-bakery into yann ([b53a431](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/b53a431))
+
 ## <small>1.0.7 (2024-05-01)</small>
 
 * Merge branch 'yann' of https://github.com/Devops-Dev-B-2024/workflow-e-bakery into yann ([4fe4c53](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/4fe4c53))
