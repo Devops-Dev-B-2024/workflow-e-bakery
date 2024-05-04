@@ -1,5 +1,5 @@
 name: Test workflow
-run-name: tests running by @${{ github.actor }}
+run-name: Tests running by @${{ github.actor }}
 on: 
   push:
     branches: [before-master]

@@ -13,9 +13,9 @@ jobs:
         run: sleep 60 # Sleep for 1 minute (60 seconds)
       - name: Check Reviews
         id: check_reviews
-        run: echo ::set-output name=has_approved::$(curl -s -H "Authorization: Bearer ${{ secrets.PR_Key }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews" | jq '.[] | select(.state == "APPROVED") | length > 0')
+        run: echo ::set-output name=has_reviews::$(if [ $(curl -s -H "Authorization: token ${{ secrets.PR_Key }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews" | jq '. | length') -eq 0 ]; then echo "false"; else echo "true"; fi)
       - name: Close Pull Request
-        if: steps.check_reviews.outputs.has_approved == 'false'
+        if: steps.check_reviews.outputs.has_reviews == 'false'
         run: |
           echo "Closing pull request #${{ github.event.pull_request.number }}"
           TOKEN="${{ secrets.PR_Key }}"
