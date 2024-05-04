@@ -11,7 +11,7 @@ jobs:
     - name: Check for reviews
       uses: actions/github-script@v4
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.PR_Key }}
         script: |
           const reviews = await github.pulls.listReviews({
             owner: context.repo.owner,
