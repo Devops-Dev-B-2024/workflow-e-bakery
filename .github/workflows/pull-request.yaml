@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for 1 minutes
-        run: sleep 60 # Sleep for 2 minutes (120 seconds)
+        run: sleep 60 # Sleep for 1 minute (60 seconds)
       - name: Close Pull Request
         if: github.event.pull_request.review_decision == null
         run: |
