@@ -1,4 +1,5 @@
 name: Close Pull Request
+run-name: Close Pull Request by @${{ github.actor }}
 
 on:
   pull_request:
