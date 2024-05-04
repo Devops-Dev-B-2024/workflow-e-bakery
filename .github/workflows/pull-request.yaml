@@ -9,7 +9,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.PR_Key }}
       PR_NUMBER: ${{ github.event.pull_request.number }}
     steps:
       - name: Wait for 1 minute
