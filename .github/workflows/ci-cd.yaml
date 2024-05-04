@@ -83,30 +83,3 @@ jobs:
         run: npx release-it
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-      
-      - name: extract release number
-        id: extract-release-number
-        run: |
-          RELEASE_NUMBER=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.release-it.outputs.tag }} \
-          | jq -r '.id')")
-          echo "::set-output name=release_number::$RELEASE_NUMBER"
-
-      - name: extract changelog
-        id: changelog
-        if: steps.release-it.outcome == 'success'
-        run: |
-          TAG=$(git describe --tags)
-          CHANGELOG=$(awk -v tag="$TAG" '$0 ~ tag {flag=1; next} /^##/ {flag=0} flag' CHANGELOG.md)
-          echo "::set-output name=content::$CHANGELOG"
-
-      - name: create github release
-        if: steps.release-it.outcome == 'success'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.extract-release-number.outputs.release_number }}
-          release_name: Release ${{ steps.extract-release-number.outputs.release_number }}
-          body: test
-          draft: true
