@@ -9,19 +9,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for 1 minute
-        run: sleep 60 # Sleep for 1 minute (60 seconds)
-      - name: Check Review Status
-        id: check_review
-        run: |
-          HAS_REVIEW=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}/reviews" | jq '. | length')
-          if [[ "$HAS_REVIEW" == "0" ]]; then
-            echo "HAS_REVIEW=false" >> $GITHUB_ENV
-          else
-            echo "HAS_REVIEW=true" >> $GITHUB_ENV
-          fi
+        run: sleep 30 # Sleep for 1 minute (60 seconds)
+      name: Check if review exists
+      id: check_review
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { data: reviews } = await github.pulls.listReviews({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.payload.pull_request.number});
+          return reviews.total_count;
       - name: Close Pull Request
-        if: env.HAS_REVIEW == 'false'
+         if: steps.check_review.outputs > 0
         uses: superbrothers/close-pull-request@v3
         with:
           comment: "This pull request has been closed because no review was submitted within 1 minute."
-          github_token: ${{ secrets.GITHUB_TOKEN }}
