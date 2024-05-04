@@ -1,30 +1,31 @@
-name: Close Pull Request
+name: Close PR without reviews
 
 on:
   pull_request:
-    types: [opened]
-  permissions:
-  contents: write
+    types: [opened, synchronize, reopened]
 
 jobs:
-  close_pull_request:
+  close_pr_without_reviews:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for 1 minute
-        run: sleep 30 # Sleep for 1 minute (60 seconds)
-      name: Check if review exists
-      id: check_review
-      uses: actions/github-script@v5
+    - name: Check for reviews
+      uses: actions/github-script@v4
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const { data: reviews } = await github.pulls.listReviews({
+          const reviews = await github.pulls.listReviews({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            pull_number: context.payload.pull_request.number});
-          return reviews.total_count;
-      - name: Close Pull Request
-         if: steps.check_review.outputs > 0
-        uses: superbrothers/close-pull-request@v3
-        with:
-          comment: "This pull request has been closed because no review was submitted within 1 minute."
+            pull_number: context.payload.pull_request.number
+          });
+
+          if (reviews.data.length === 0) {
+            await github.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              state: 'closed'
+            });
+          } else {
+            console.log('Pull request has reviews, no action needed.');
+          }
