@@ -8,6 +8,11 @@ jobs:
   close_pr_without_reviews:
     runs-on: ubuntu-latest
     steps:
+    - name: Wait for 2 minutes
+      uses: actions/wait-action@v2
+      with:
+        time: '2m' # 2 minutes
+
     - name: Check for reviews
       uses: actions/github-script@v4
       with:
