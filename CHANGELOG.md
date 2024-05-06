@@ -1,5 +1,9 @@
 
 
+## <small>1.0.9 (2024-05-06)</small>
+
+* Test release by update readme ([26d4595](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/26d4595))
+
 ## <small>1.0.8 (2024-05-04)</small>
 
 * Merge branch 'yann' of https://github.com/Devops-Dev-B-2024/workflow-e-bakery into yann ([b53a431](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/b53a431))
