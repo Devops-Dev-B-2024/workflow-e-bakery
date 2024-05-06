@@ -1,4 +1,5 @@
 name: Close PR without reviews
+run-name: Delete Pull Request by @${{ github.actor }}
 
 on:
   pull_request:
