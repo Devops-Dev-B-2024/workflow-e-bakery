@@ -20,7 +20,7 @@ Ce workflow se déclenche sur :
 - pull request sur master et before-master
   
 Ce workflow permet de tester l'api en vérifiant :
-- l'instalation des dépendances
+- l'installation des dépendances
 - les tests de l'api
 - la syntaxe du code
 - la sécurité des dépendances (si il n'y a pas de faille etc...)
