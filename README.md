@@ -3,16 +3,16 @@
 
 ## À propos du projet
 Nous avons repris notre api e-bakery pour ce projet.  
-Le but de se projet est de créer un workflow qui permet de déployer une image docker de notre api et de créer une release.  
+Le but de ce projet est de créer un workflow qui permet de déployer une image docker de notre api et de créer une release.  
   
 On a crée 3 workflows :  
 - Test 
 - Close pull request
 - CI/CD
   
-Qui servent respectivement à tester l'api, close les pull request et assuré l'intégration et déploiement continue.  
+Qui servent respectivement à tester l'api, close les pull request et assurer l'intégration et déploiement continue.  
 
-On travail sur différentes branches puis quand on a fini la feature, on créer une pull request dans before-master et une fois fini avec toutes les fonctionnalités, on fusionne tous ça dans master (via une pull request).
+On travail sur différentes branches puis quand on a fini la feature, on crée une pull request dans before-master et une fois fini avec toutes les fonctionnalités, on fusionne tous ça dans master (via une pull request).
 
 ## Workflow de test
 Ce workflow se déclenche sur :
@@ -28,7 +28,7 @@ Ce workflow permet de tester l'api en vérifiant :
 ## Workflow pour close les pull request
 Ce workflow se déclenche quand une pull request est ouverte.  
   
-Le workflow va se déclenché et attendre 30 secondes et si la pull request n'a pas de review durant ces 30 secondes, elle est close par le workflow.
+Le workflow va se déclencher et attendre 30 secondes et si la pull request n'a pas de review durant ces 30 secondes, elle est close par le workflow.
 
 ## Workflow de CI/CD
 Ce workflow se déclenche quand on push dans master (via le merge de la pull request).  
@@ -36,13 +36,13 @@ Ce workflow se déclenche quand on push dans master (via le merge de la pull req
 Ce workflow se divise en 3 jobs :
 - run-node (vérifie que l'api se lance et bien et passe les tests)
 - docker (push l'image sur dockerhub)
-- release (créer un tag de release)
+- release (crée un tag de release)
 
 #### run-node
 Les test ne change pas par rapport au workflow de test, on a choisi de diviser ces workflows pour que l'on puisse tester l'api et garder les tests avant de déployer et créer un tag de release dans master.
 
 #### docker
-Ce job commence par se connecté à dockerhub.  
+Ce job commence par se connecter à dockerhub.  
 Une fois fait, il va :
 - build l'image
 - la taguer
