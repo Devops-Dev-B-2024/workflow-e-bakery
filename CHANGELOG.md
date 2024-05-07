@@ -1,5 +1,9 @@
 
 
+## <small>1.0.12 (2024-05-07)</small>
+
+* Merge pull request #78 from Devops-Dev-B-2024/yann ([3797c64](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/3797c64)), closes [#78](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/issues/78)
+
 ## <small>1.0.11 (2024-05-07)</small>
 
 * Merge pull request #76 from Devops-Dev-B-2024/before-master ([e38ad98](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/e38ad98)), closes [#76](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/issues/76)
