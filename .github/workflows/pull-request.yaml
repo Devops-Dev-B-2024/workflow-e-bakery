@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Sleep for 2 minutes
-      run: sleep 30 # 2 minutes
+      run: sleep 30 # 50 minutes
 
     - name: Check for reviews
       uses: actions/github-script@v4
