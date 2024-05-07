@@ -1,5 +1,25 @@
 
 
+## <small>1.0.13 (2024-05-07)</small>
+
+* Update README.md ([d15ce24](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/d15ce24))
+
+## <small>1.0.12 (2024-05-07)</small>
+
+* Merge pull request #78 from Devops-Dev-B-2024/yann ([3797c64](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/3797c64)), closes [#78](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/issues/78)
+
+## <small>1.0.11 (2024-05-07)</small>
+
+* Merge pull request #76 from Devops-Dev-B-2024/before-master ([e38ad98](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/e38ad98)), closes [#76](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/issues/76)
+
+## <small>1.0.10 (2024-05-07)</small>
+
+* Merge pull request #72 from Devops-Dev-B-2024/before-master ([560d7d9](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/560d7d9)), closes [#72](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/issues/72)
+
+## <small>1.0.9 (2024-05-06)</small>
+
+* Test release by update readme ([26d4595](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/26d4595))
+
 ## <small>1.0.8 (2024-05-04)</small>
 
 * Merge branch 'yann' of https://github.com/Devops-Dev-B-2024/workflow-e-bakery into yann ([b53a431](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/b53a431))
