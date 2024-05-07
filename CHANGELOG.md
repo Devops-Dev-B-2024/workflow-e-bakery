@@ -1,5 +1,9 @@
 
 
+## <small>1.0.10 (2024-05-07)</small>
+
+* Merge pull request #72 from Devops-Dev-B-2024/before-master ([560d7d9](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/560d7d9)), closes [#72](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/issues/72)
+
 ## <small>1.0.9 (2024-05-06)</small>
 
 * Test release by update readme ([26d4595](https://github.com/Devops-Dev-B-2024/workflow-e-bakery/commit/26d4595))
